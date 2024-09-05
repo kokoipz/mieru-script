@@ -22,6 +22,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/Felix-zf/mieru-
 ```
 .\mieru stop
 ```
+7. 可使用V2rayN或者是其他的代理软件，链接客户端的本地代理地址
 
 ## 鸣谢
 - best trojan油管视频：https://www.youtube.com/watch?v=xc1eIj_yIcs
