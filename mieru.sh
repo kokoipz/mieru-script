@@ -60,7 +60,7 @@ inst_mita(){
     fi
     ${PACKAGE_INSTALL} curl wget sudo
 
-    last_version=$(curl -s https://data.jsdelivr.com/v1/package/gh/enfein/mieru | grep '"version":' | sed 's/.*"version":"\([^"]*\)".*/\1/' | sort -V | tail -n 2 | head -n 1 | sed -n 4p | tr -d ',"' | awk '{print $1}')
+    last_version=$(curl -s https://data.jsdelivr.com/v1/package/gh/enfein/mieru | sed -n 5p | tr -d ',"' | awk '{print $1}')
     if [[ $SYSTEM == "CentOS" ]]; then
         [[ $(archAffix) == "amd64" ]] && arch="x86_64" || [[ $(archAffix) == "arm64" ]] && arch="aarch64"
         wget -N https://github.com/enfein/mieru/releases/download/v"$last_version"/mita-"$last_version"-1."$arch".rpm
