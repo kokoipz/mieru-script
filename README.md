@@ -1,6 +1,6 @@
 # mieru script
 
-Mieru 协议一键安装脚本
+Mieru 协议一键安装脚本，2024/12/8修复最新安装出错问题。
 
 ```shell
 wget -N --no-check-certificate https://raw.githubusercontent.com/Felix-zf/mieru-script/main/mieru.sh && bash mieru.sh
