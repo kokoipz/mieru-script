@@ -60,17 +60,23 @@ inst_mita(){
     fi
     ${PACKAGE_INSTALL} curl wget sudo
 
-    last_version=$(curl -s https://data.jsdelivr.com/v1/package/gh/enfein/mieru | sed -n 4p | tr -d ',"' | awk '{print $2}')
-    if [[ $SYSTEM == "CentOS" ]]; then
-        [[ $(archAffix) == "amd64" ]] && arch="x86_64" || [[ $(archAffix) == "arm64" ]] && arch="aarch64"
-        wget -N https://github.com/enfein/mieru/releases/download/v"$last_version"/mita-"$last_version"-1."$arch".rpm
-        rpm -ivh mita-$last_version-1.$arch.rpm
-        rm -f mita-$last_version-1.$arch.rpm
-    else
-        wget -N https://github.com/enfein/mieru/releases/download/v"$last_version"/mita_"$last_version"_$(archAffix).deb
-        dpkg -i mita_"$last_version"_$(archAffix).deb
-        rm -f mita_"$last_version"_$(archAffix).deb
-    fi
+last_version=$(curl -s https://data.jsdelivr.com/v1/package/gh/enfein/mieru \
+  | grep '"version":' \
+  | sed 's/.*"version":"\([^"]*\)".*/\1/' \
+  | sort -V \
+  | tail -n 2 \
+  | head -n 1)
+
+if [[ $SYSTEM == "CentOS" ]]; then
+    [[ $(archAffix) == "amd64" ]] && arch="x86_64" || [[ $(archAffix) == "arm64" ]] && arch="aarch64"
+    wget -N https://github.com/enfein/mieru/releases/download/v"$last_version"/mita-"$last_version"-1."$arch".rpm
+    rpm -ivh mita-$last_version-1.$arch.rpm
+    rm -f mita-$last_version-1.$arch.rpm
+else
+    wget -N https://github.com/enfein/mieru/releases/download/v"$last_version"/mita_"$last_version"_$(archAffix).deb
+    dpkg -i mita_"$last_version"_$(archAffix).deb
+    rm -f mita_"$last_version"_$(archAffix).deb
+fi
 
     edit_conf
 }
